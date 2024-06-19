@@ -20,6 +20,7 @@ class ModCommand {
         }
         val id = Item.getIdFromItem(stack.item)
         ModConfig.addItem(arrayListOf(id, stack.metadata))
+        ModConfig.save()
     }
 
 }

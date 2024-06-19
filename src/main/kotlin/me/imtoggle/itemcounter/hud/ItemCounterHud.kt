@@ -3,12 +3,14 @@ package me.imtoggle.itemcounter.hud
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.BasicHud
+import cc.polyfrost.oneconfig.internal.hud.HudCore
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
 import cc.polyfrost.oneconfig.renderer.TextRenderer
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.imtoggle.itemcounter.config.MainRenderer
 import me.imtoggle.itemcounter.config.ModConfig
 import me.imtoggle.itemcounter.element.ItemElement
+import me.imtoggle.itemcounter.util.exampleItems
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.GlStateManager as GL
 import net.minecraft.inventory.IInventory
@@ -76,14 +78,25 @@ class ItemCounterHud : BasicHud(true, 1920f - 400, 1080f - 21) {
     }
 
     private val shownItems: List<ItemElement>
-        get() = arrayListOf<ItemElement>().apply {
-            MainRenderer.elements.forEach {
-                if (it.itemEntry.enabled) add(it)
+        get() = if (HudCore.editing) {
+            arrayListOf<ItemElement>().apply {
+                exampleItems.forEach {
+                    add(it)
+                }
             }
-            if (reversed) reverse()
+        } else {
+            arrayListOf<ItemElement>().apply {
+                MainRenderer.elements.forEach {
+                    if (it.itemEntry.enabled) add(it)
+                }
+                if (reversed) reverse()
+            }
         }
 
     private fun getItemAmount(element: ItemElement): Int {
+        if (HudCore.editing) {
+            return element.itemStack.stackSize
+        }
         val itemList = mc.thePlayer.inventory.mainInventory.toMutableList()
         return itemList.filter {
             it?.item == element.itemStack.item && (element.itemEntry.ignoreMetaData || it?.metadata == element.itemStack.metadata)
