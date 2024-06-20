@@ -2,6 +2,11 @@
 
 ![Minimal Powered by OneConfig](https://polyfrost.org/img/cozy-minimal_vector.svg)
 
+## Features
+- Customizable items order
+- Toggleable metadata check
+- Horizontal / Vertical Mode
+
 ## Screenshots
 HUD
 
