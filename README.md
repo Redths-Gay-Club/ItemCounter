@@ -4,6 +4,8 @@
 
 ## Screenshots
 HUD
+
 ![HUD.png](screenshots/HUD.png)
 Config Menu
+
 ![Config.png](screenshots/Config.png)
