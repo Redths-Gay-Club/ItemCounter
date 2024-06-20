@@ -5,6 +5,7 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.SubCommand
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.imtoggle.itemcounter.ItemCounter
 import me.imtoggle.itemcounter.config.ModConfig
+import me.imtoggle.itemcounter.util.addItem
 import me.imtoggle.itemcounter.util.notify
 import net.minecraft.item.Item
 
@@ -19,8 +20,7 @@ class ModCommand {
             return
         }
         val id = Item.getIdFromItem(stack.item)
-        ModConfig.addItem(arrayListOf(id, stack.metadata))
-        ModConfig.save()
+        if (addItem(arrayListOf(id, stack.metadata))) ModConfig.save()
     }
 
 }

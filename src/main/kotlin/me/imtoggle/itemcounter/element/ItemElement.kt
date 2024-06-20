@@ -30,12 +30,13 @@ class ItemElement(val itemEntry: ItemEntry, val itemStack: ItemStack) {
     }
 
     fun draw(vg: Long, x: Float, y: Float, inputHandler: InputHandler) {
-        if (animationX is DummyAnimation) {
+        val doAnimation = dragging != null && dragging != this
+        if (animationX is DummyAnimation || !doAnimation) {
             animationX = EaseOutQuart(0f, 0f, x, false)
         } else if (x != animationX.end) {
             animationX = EaseOutQuart(400f, animationX.end, x, false)
         }
-        if (animationY is DummyAnimation) {
+        if (animationY is DummyAnimation || !doAnimation) {
             animationY = EaseOutQuart(0f, 0f, y, false)
         } else if (y != animationY.end) {
             animationY = EaseOutQuart(400f, animationY.end, y, false)
@@ -69,8 +70,14 @@ class ItemElement(val itemEntry: ItemEntry, val itemStack: ItemStack) {
 
     fun onRemove() {
         ModConfig.entries.remove(itemEntry)
-        ModConfig.itemInfos.remove(itemEntry.itemInfo)
+        ModConfig.itemInfos.remove(itemStack.displayName)
         MainRenderer.removeQueue.add(this)
+    }
+
+    fun onAdd(index: Int) {
+        ModConfig.entries.add(index, itemEntry)
+        ModConfig.itemInfos.add(itemStack.displayName)
+        MainRenderer.addQueue[index] = this
     }
 
 }

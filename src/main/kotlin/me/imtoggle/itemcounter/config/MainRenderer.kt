@@ -43,9 +43,7 @@ object MainRenderer : BasicOption(null, null, "", "", "General", "", 2) {
                 renderX = x.toFloat() + 64 + i % 4 * 224
                 renderY = y.toFloat() + i / 4 * 96 + 16
                 if (ItemRenderer.shouldCheck) {
-                    ModConfig.itemInfos.add(dragging!!.itemEntry.itemInfo)
-                    ModConfig.entries.add(index, dragging!!.itemEntry)
-                    addQueue[index] = dragging!!
+                    dragging!!.onAdd(index)
                 }
             }
             if (index < elements.size) {

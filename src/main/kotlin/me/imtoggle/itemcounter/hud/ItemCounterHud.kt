@@ -13,7 +13,6 @@ import me.imtoggle.itemcounter.element.ItemElement
 import me.imtoggle.itemcounter.util.exampleItems
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.renderer.GlStateManager as GL
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 
 
@@ -99,14 +98,11 @@ class ItemCounterHud : BasicHud(true, 1920f - 400, 1080f - 21) {
         }
         val itemList = mc.thePlayer.inventory.mainInventory.toMutableList()
         return itemList.filter {
-            it?.item == element.itemStack.item && (element.itemEntry.ignoreMetaData || it?.metadata == element.itemStack.metadata)
+            it?.item == element.itemStack.item && (element.itemEntry.ignoreMetaData || ItemStack(it.item, 1, it.metadata).displayName == element.itemStack.displayName)
         }.sumOf {
             it.stackSize
         }
     }
-
-    private val IInventory.itemStackList: List<ItemStack>
-        get() = (0..26).map { index -> getStackInSlot(index) }
 
     private fun draw(x: Float, y: Float, scale: Float, example: Boolean) {
         val itemAmountMap: Map<ItemElement, Int> = shownItems.associateWith { getItemAmount(it) }
