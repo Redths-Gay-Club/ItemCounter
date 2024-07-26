@@ -13,7 +13,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import java.lang.reflect.Field
 
-object ModConfig : Config(Mod(ItemCounter.NAME, ModType.UTIL_QOL, "/assets/tempIcon.png"), "${ItemCounter.MODID}.json") {
+object ModConfig : Config(Mod(ItemCounter.NAME, ModType.HUD, "/assets/ItemCounterDarkTransparent.svg"), "${ItemCounter.MODID}.json") {
 
     @CustomOption
     var entries = ArrayList<ItemEntry>()
